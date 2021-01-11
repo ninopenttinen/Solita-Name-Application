@@ -1,0 +1,72 @@
+@font-face {
+  font-family: "Helvetica-Neue";
+  src: url("../fonts/HelveticaNeueCyr-Medium.woff2") format("woff2");
+  src: url("../fonts/HelveticaNeueCyr-Medium.woff") format("woff");
+}
+@font-face {
+  font-family: "Helvetica-Neue-Light";
+  src: url("../fonts/HelveticaNeueCyr-Light.woff2") format("woff");
+  src: url("../fonts/HelveticaNeueCyr-Light.woff") format("woff2");
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px 10px rgb(243, 243, 243);
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 10px 10px rgb(143, 143, 143);
+  border-radius: 1px;
+}
+
+#layout {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto min-content auto;
+}
+
+.sidebar {
+  z-index: -1;
+  background: linear-gradient(
+    0deg,
+    rgba(235, 235, 235, 1) 0%,
+    rgba(250, 250, 250, 1) 89%
+  );
+}
+
+#root {
+  width: 55vw;
+  min-width: 600px;
+  max-width: 900px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.233);
+}
+
+div,
+h1,
+button,
+label {
+  font-family: Helvetica-Neue;
+}
+
+a {
+  font-family: Helvetica-Neue-Light;
+}
