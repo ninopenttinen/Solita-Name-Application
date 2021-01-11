@@ -9,19 +9,19 @@ Run **"docker-compose up --build"** at the project root.
 Name data is stored on a PostgreSQL database.  
 The project backend has the following API endpoints:
 
-1. GET /api/names
+**1. GET /api/names**
 
 - Returns all names
 
-2. GET /api/names?orderBy={param}
+**2. GET /api/names?orderBy={param}**
 
 - Returns all names ordered by name or amount
 
-3. GET /api/names?name={param}
+**3. GET /api/names?name={param}**
 
 - Returns one name that matches given parameter
 
-4. GET /api/names/total
+**4. GET /api/names/total**
 
 - Returns the total amount of all names
 
