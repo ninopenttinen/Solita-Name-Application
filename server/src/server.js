@@ -33,23 +33,25 @@ const pool = new Pool({
 // GET /api/names?orderBy={param}   Returns all names ordered by name or amount
 // GET /api/names?name={param}      Returns one name that matches given parameter
 app.get("/api/names", async (req, res) => {
-  let { orderBy, name } = req.query;
-
-  // Compare the "orderBy" query param to whitelisted words
-  if (["name", "amount"].includes(orderBy)) orderBy = `ORDER BY ${orderBy}`;
-  else if (["-name", "-amount"].includes(orderBy))
-    orderBy = `ORDER BY ${orderBy.slice(1)} DESC`;
-  else orderBy = "";
+  const { orderBy, name } = req.query;
+  let values = [];
+  let sql = "SELECT name, amount FROM names ";
 
   // Check that the "name" query param contains only allowed characters
-  if (name?.match("^$|^[A-Za-zäöåÄÖÅ]+$"))
-    name = `WHERE lower(name) = lower('${name}')`;
-  else name = "";
+  if (name?.match("^$|^[A-Za-zäöåÄÖÅ]+$")) {
+    sql += "WHERE lower(name) = lower($1) ";
+    values.push(name);
+  }
+
+  // Compare the "orderBy" query param to whitelisted words
+  if (["name", "amount"].includes(orderBy)) {
+    sql += `ORDER BY ${orderBy} ASC;`;
+  } else if (["-name", "-amount"].includes(orderBy)) {
+    sql += `ORDER BY ${orderBy.slice(1)} DESC;`;
+  } else sql += ";";
 
   try {
-    results = await pool.query(
-      `SELECT name, amount FROM names ${name} ${orderBy};`
-    );
+    results = await pool.query(sql, values);
     res.status(200).json(results.rows);
   } catch (err) {
     console.log(err.code, ": ", err.message);
@@ -60,7 +62,7 @@ app.get("/api/names", async (req, res) => {
 // GET /api/names/total             Returns the total amount of all names
 app.get("/api/names/total", async (req, res) => {
   try {
-    results = await pool.query(`SELECT SUM(amount) AS total FROM names;`);
+    results = await pool.query("SELECT SUM(amount) AS total FROM names;");
     res.status(200).json(results.rows);
   } catch (err) {
     console.log(err.code, ": ", err.message);
