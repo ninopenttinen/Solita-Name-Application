@@ -1,4 +1,4 @@
-FROM node:14.4 as build-deps
+FROM node:14.4-alpine as build-deps
 WORKDIR /usr/src/app
 COPY ./webapp/package* ./
 RUN npm install
@@ -6,7 +6,7 @@ COPY ./webapp/public ./public
 COPY ./webapp/src ./src
 RUN npm run-script build
 
-FROM nginx:1.19
+FROM nginx:1.19-alpine
 COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 EXPOSE 80

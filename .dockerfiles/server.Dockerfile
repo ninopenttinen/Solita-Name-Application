@@ -1,4 +1,4 @@
-FROM node:14.4
+FROM node:14.4-alpine
 WORKDIR /usr/server
 ARG NODE_ENV
 ENV NODE_ENV=$NODE_ENV
